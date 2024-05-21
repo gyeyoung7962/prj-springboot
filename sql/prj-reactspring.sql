@@ -10,3 +10,5 @@ create table board
 );
 
 desc board;
+select *
+from board;
