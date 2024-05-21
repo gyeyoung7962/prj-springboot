@@ -48,5 +48,12 @@ public class BoardController {
         boardService.remove(id);
     }
 
+    @PutMapping("/edit")
+    public void update(@RequestBody Board board) {
+
+        boardService.update(board);
+
+    }
+
 
 }
