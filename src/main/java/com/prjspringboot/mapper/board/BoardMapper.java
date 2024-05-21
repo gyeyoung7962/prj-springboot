@@ -1,6 +1,7 @@
 package com.prjspringboot.mapper.board;
 
 import com.prjspringboot.domain.board.Board;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -30,4 +31,10 @@ public interface BoardMapper {
             where id = #{id}
             """)
     Board selectById(Integer id);
+
+    @Delete("""
+            delete from board
+            where id = #{id}
+            """)
+    int deleteById(Integer id);
 }
