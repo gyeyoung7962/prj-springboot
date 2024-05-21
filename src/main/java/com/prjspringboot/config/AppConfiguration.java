@@ -35,11 +35,13 @@ public class AppConfiguration {
 
     @Bean
     public JwtDecoder jwtDecoder() {
+
         return NimbusJwtDecoder.withPublicKey(this.publicKey).build();
     }
 
     @Bean
     public JwtEncoder jwtEncoder() {
+
         JWK jwk = new RSAKey.Builder(this.publicKey)
                 .privateKey(this.privateKey)
                 .build();
