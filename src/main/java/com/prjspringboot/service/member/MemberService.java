@@ -66,4 +66,8 @@ public class MemberService {
 
         return mapper.selectById(id);
     }
+
+    public void remove(Integer id) {
+        mapper.deleteById(id);
+    }
 }
