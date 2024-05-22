@@ -11,10 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private MemberMapper mapper;
+    private final MemberMapper mapper;
 
 
     public void add(Member member) {
         mapper.insert(member);
+    }
+
+    public Member getByEmail(String email) {
+
+        return mapper.selectByEmail(email);
+
     }
 }
