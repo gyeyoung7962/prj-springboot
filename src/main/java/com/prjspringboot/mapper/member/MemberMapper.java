@@ -38,7 +38,7 @@ public interface MemberMapper {
     List<Member> memberList();
 
     @Select("""
-            select id, email, nick_name, regDate
+            select id, password, email, nick_name, regDate
             from member
             where id = #{id}
             """)
