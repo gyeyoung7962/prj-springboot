@@ -22,3 +22,5 @@ create table member
     regDate   datetime default now()
 );
 
+select *
+from member;

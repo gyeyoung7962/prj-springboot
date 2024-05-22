@@ -23,4 +23,9 @@ public class MemberService {
         return mapper.selectByEmail(email);
 
     }
+
+    public Member getByNickName(String nickName) {
+
+        return mapper.selectByNickName(nickName);
+    }
 }

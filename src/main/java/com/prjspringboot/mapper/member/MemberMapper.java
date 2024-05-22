@@ -20,4 +20,11 @@ public interface MemberMapper {
             where email = #{email}
             """)
     Member selectByEmail(String email);
+
+    @Select("""
+            select *
+            from member
+            where nick_name = #{nickName}
+            """)
+    Member selectByNickName(String nickName);
 }
