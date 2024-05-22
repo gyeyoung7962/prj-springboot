@@ -39,6 +39,7 @@ public interface MemberMapper {
     @Select("""
             select id, email, nick_name, regDate
             from member
+            where id = #{id}
             """)
     Member selectById(Integer id);
 }
