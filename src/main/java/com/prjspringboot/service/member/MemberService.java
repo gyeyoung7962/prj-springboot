@@ -70,4 +70,16 @@ public class MemberService {
     public void remove(Integer id) {
         mapper.deleteById(id);
     }
+
+    public boolean hasAccess(Member member) {
+
+        Member dbMember = mapper.selectById(member.getId());
+
+        if (dbMember == null) {
+            return false;
+        }
+        //db비밀번호는 encode
+        //member로 받아온 비밀번호 decode
+        return passwordEncoder.matches(member.getPassword(), dbMember.getPassword());
+    }
 }

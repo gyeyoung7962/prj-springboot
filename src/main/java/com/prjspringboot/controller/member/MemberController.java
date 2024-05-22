@@ -3,6 +3,7 @@ package com.prjspringboot.controller.member;
 import com.prjspringboot.domain.member.Member;
 import com.prjspringboot.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,8 +70,13 @@ public class MemberController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity delete(@RequestBody Member member) {
 
-        service.remove(id);
+        if (service.hasAccess(member)) {
+            service.remove(member.getId());
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
     }
 }
