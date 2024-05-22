@@ -27,13 +27,13 @@ public class MemberService {
 
     public Member getByEmail(String email) {
 
-        return mapper.selectByEmail(email);
+        return mapper.selectByEmail(email.trim());
 
     }
 
     public Member getByNickName(String nickName) {
 
-        return mapper.selectByNickName(nickName);
+        return mapper.selectByNickName(nickName.trim());
     }
 
     public boolean validate(Member member) {
