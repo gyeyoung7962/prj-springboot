@@ -12,3 +12,14 @@ create table board
 desc board;
 select *
 from board;
+
+create table member
+(
+    id        int primary key auto_increment,
+    email     varchar(100) not null unique,
+    password  varchar(100) not null,
+    nick_name varchar(100) not null unique,
+    regDate   datetime default now()
+);
+
+
