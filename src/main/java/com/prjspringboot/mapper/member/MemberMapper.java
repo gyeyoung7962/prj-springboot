@@ -36,4 +36,9 @@ public interface MemberMapper {
             """)
     List<Member> memberList();
 
+    @Select("""
+            select id, email, nick_name, regDate
+            from member
+            """)
+    Member selectById(Integer id);
 }
