@@ -108,7 +108,7 @@ public class MemberService {
         if (dbMember == null) {
             return false;
         }
-        if (passwordEncoder.matches(member.getOldPassword(), dbMember.getPassword())) {
+        if (!passwordEncoder.matches(member.getOldPassword(), dbMember.getPassword())) {
             return false;
         }
         return true;
