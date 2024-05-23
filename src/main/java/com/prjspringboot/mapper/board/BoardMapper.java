@@ -10,14 +10,15 @@ public interface BoardMapper {
 
 
     @Insert("""
-            insert into board(title, content, writer)
-            values (#{title}, #{content}, #{writer})
+            insert into board(title, content, member_id)
+            values (#{title}, #{content}, #{memberId})
             """)
     void add(Board board);
 
     @Select("""
-            select id, title, writer
-            from board
+            select b.id, b.title, m.nick_name as writer
+            from board b join member m
+            on b.member_id = m.id
             order by id desc
             """)
     List<Board> selectAll();
