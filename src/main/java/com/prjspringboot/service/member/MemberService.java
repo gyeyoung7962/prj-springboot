@@ -96,4 +96,22 @@ public class MemberService {
 
         mapper.update(member);
     }
+
+    public Member getInfoByNick(String nickName) {
+
+        return mapper.getInfoByNick(nickName);
+    }
+
+    public boolean hasAccessModify(Member member) {
+
+        Member dbMember = mapper.selectById(member.getId());
+        if (dbMember == null) {
+            return false;
+        }
+        if (passwordEncoder.matches(member.getOldPassword(), dbMember.getPassword())) {
+            return false;
+        }
+        return true;
+    }
+
 }

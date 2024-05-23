@@ -80,11 +80,29 @@ public class MemberController {
     }
 
     @PutMapping("/modify")
-    public void modify(@RequestBody Member member) {
+    public ResponseEntity modify(@RequestBody Member member) {
 
-        System.out.println("member = " + member);
+        if (service.hasAccessModify(member)) {
+            service.modfiy(member);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
 
-        service.modfiy(member);
+    }
+
+    @GetMapping("/checkNick")
+    public ResponseEntity checkNick(@RequestParam("nickName") String nickName) {
+
+        Member member = service.getInfoByNick(nickName);
+
+        if (member == null) {
+
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(nickName);
+        }
+
     }
 
 }
