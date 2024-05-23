@@ -1,10 +1,7 @@
 package com.prjspringboot.mapper.member;
 
 import com.prjspringboot.domain.member.Member;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -51,4 +48,11 @@ public interface MemberMapper {
             where id = #{id}
             """)
     int deleteById(Integer id);
+
+    @Update("""
+            update member
+            set password = #{password}, nick_name = #{nickName}
+            where id = #{id}
+            """)
+    int update(Member member);
 }

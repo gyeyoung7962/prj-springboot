@@ -82,4 +82,18 @@ public class MemberService {
         //member로 받아온 비밀번호 decode
         return passwordEncoder.matches(member.getPassword(), dbMember.getPassword());
     }
+
+    public void modfiy(Member member) {
+
+        if (member.getPassword() != null && member.getPassword().length() > 0) {
+            //패스워드가 입력되었으니 바꾸기
+            member.setPassword(passwordEncoder.encode(member.getPassword()));
+        } else {
+            //입력 안됐으니 기존 값으로 유지
+            Member dbMember = mapper.selectById(member.getId());
+            member.setPassword(dbMember.getPassword());
+        }
+
+        mapper.update(member);
+    }
 }
