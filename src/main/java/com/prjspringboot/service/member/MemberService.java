@@ -3,6 +3,7 @@ package com.prjspringboot.service.member;
 import com.prjspringboot.domain.member.Member;
 import com.prjspringboot.mapper.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -78,7 +79,11 @@ public class MemberService {
         mapper.deleteById(id);
     }
 
-    public boolean hasAccess(Member member) {
+    public boolean hasAccess(Member member, Authentication authentication) {
+
+        if (!member.getId().toString().equals(authentication.getName())) {
+            return false;
+        }
 
         Member dbMember = mapper.selectById(member.getId());
 
