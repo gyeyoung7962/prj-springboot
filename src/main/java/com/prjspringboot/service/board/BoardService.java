@@ -1,7 +1,6 @@
 package com.prjspringboot.service.board;
 
 import com.prjspringboot.domain.board.Board;
-import com.prjspringboot.domain.member.Member;
 import com.prjspringboot.mapper.board.BoardMapper;
 import com.prjspringboot.mapper.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +21,7 @@ public class BoardService {
 
     public void add(Board board, Authentication authentication) {
 
-        Member member = memberMapper.selectByEmail(authentication.getName());
-        board.setMemberId(member.getId());
+        board.setMemberId(Integer.valueOf(authentication.getName()));
         mapper.add(board);
     }
 
