@@ -56,3 +56,18 @@ delete
 from board
 where board.member_id = 9;
 
+#권한 테이블
+create table authority
+(
+    member_id int         not null references member (id),
+    name      varchar(20) not null,
+    primary key (member_id, name)
+);
+
+insert into authority(member_id, name)
+values (19, 'admin');
+
+select m.nick_name, a.name
+from member m
+         join authority a on m.id = a.member_id
+where m.nick_name = 'admin';

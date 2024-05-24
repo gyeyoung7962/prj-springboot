@@ -62,4 +62,11 @@ public interface MemberMapper {
             where nick_name = #{nickName}
             """)
     Member getInfoByNick(String nickName);
+
+    @Select("""
+            select name from authority
+            where member_id = #{memberId}
+            """)
+    List<String> selectAuthorityByMemberId(Integer memberId);
+
 }
