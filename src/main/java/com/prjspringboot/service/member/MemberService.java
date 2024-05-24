@@ -137,7 +137,7 @@ public class MemberService {
                         .issuer("self")
                         .issuedAt(Instant.now())
                         .expiresAt(Instant.now().plusSeconds(60 * 60 * 24 * 7))
-                        .subject(member.getEmail())
+                        .subject(db.getId().toString())
                         .claim("scope", "") //권한
                         .claim("nickName", db.getNickName())
                         .build();
