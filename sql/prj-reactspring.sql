@@ -42,4 +42,17 @@ alter table board
     modify column member_id int not null;
 desc board;
 select *
-from board;
+from board
+order by id desc;
+
+select *
+from member;
+
+select *
+from member
+where email = 'test1@naver.com';
+
+delete
+from board
+where board.member_id = 9;
+
