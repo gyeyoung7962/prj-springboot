@@ -71,3 +71,6 @@ select m.nick_name, a.name
 from member m
          join authority a on m.id = a.member_id
 where m.nick_name = 'admin';
+
+select *
+from member;

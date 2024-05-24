@@ -6,6 +6,7 @@ import com.prjspringboot.mapper.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -102,7 +103,7 @@ public class MemberService {
         return passwordEncoder.matches(member.getPassword(), dbMember.getPassword());
     }
 
-    public void modfiy(Member member) {
+    public Map<String, Object> modify(Member member, Authentication authentication) {
 
         if (member.getPassword() != null && member.getPassword().length() > 0) {
             //패스워드가 입력되었으니 바꾸기
@@ -114,6 +115,19 @@ public class MemberService {
         }
 
         mapper.update(member);
+
+        String token = "";
+
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+
+        Map<String, Object> claims = jwt.getClaims();
+        JwtClaimsSet.Builder jwtClaimsSetBuilder = JwtClaimsSet.builder();
+        claims.forEach(jwtClaimsSetBuilder::claim);
+        jwtClaimsSetBuilder.claim("nickName", member.getNickName());
+
+        JwtClaimsSet jwtClaimsSet = jwtClaimsSetBuilder.build();
+        token = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
+        return Map.of("token", token);
     }
 
     public Member getInfoByNick(String nickName) {
@@ -156,8 +170,8 @@ public class MemberService {
                 //https://github.com/spring-projects/spring-security-samples/blob/main/servlet/spring-boot/java/jwt/login/src/main/java/example/web/TokenController.java
                 JwtClaimsSet claims = JwtClaimsSet.builder()
                         .issuer("self")
-                        .issuedAt(Instant.now())
-                        .expiresAt(Instant.now().plusSeconds(60 * 60 * 24 * 7))
+                        .issuedAt(now)
+                        .expiresAt(now.plusSeconds(60 * 60 * 24 * 7))
                         .subject(db.getId().toString())
                         .claim("scope", authorityString) //권한
                         .claim("nickName", db.getNickName())

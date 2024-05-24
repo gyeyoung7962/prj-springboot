@@ -95,8 +95,10 @@ public class MemberController {
                                  Authentication authentication) {
 
         if (service.hasAccessModify(member, authentication)) {
-            service.modfiy(member);
-            return ResponseEntity.ok().build();
+
+            // "token", "wd3adsw"
+            Map<String, Object> result = service.modify(member, authentication);
+            return ResponseEntity.ok(result);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
