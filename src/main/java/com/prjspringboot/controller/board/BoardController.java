@@ -59,8 +59,12 @@ public class BoardController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity update(@RequestBody Board board) {
+    public ResponseEntity update(@RequestBody Board board, Authentication authentication) {
 
+
+        if (!boardService.hasAccess(board.getId(), authentication)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         if (boardService.validate(board)) {
 
             boardService.update(board);
