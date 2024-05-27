@@ -53,13 +53,28 @@ public interface BoardMapper {
 
 
     @Select("""
-            select b.id, b.title, m.nick_name as writer
-            from board b join member m
-            on b.member_id = m.id
+            <script>
+            select b.id, 
+                    b.title, 
+                    m.nick_name as writer
+            from board b join member m on b.member_id = m.id
+            <trim prefix="where" prefixOverrides="OR">
+            <if test="searchType != null">
+            <bind name="pattern" value="'%'+keyword+'%'"/>
+            <if test="searchType == 'all' || searchType == 'text'">
+            OR b.title like #{pattern}
+            OR b.content like #{pattern}
+            </if>
+            <if test="searchType == 'all' || searchType == 'nickName'">
+            OR m.nick_name like #{pattern}
+            </if>
+            </if>
+            </trim>
             order by id desc
             limit #{offset}, 10
+            </script>
             """)
-    List<Board> selectAllPaging(Integer offset);
+    List<Board> selectAllPaging(Integer offset, String searchType, String keyword);
 
 
     @Select("""

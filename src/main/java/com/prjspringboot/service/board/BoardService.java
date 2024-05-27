@@ -37,7 +37,7 @@ public class BoardService {
         return true;
     }
 
-    public Map<String, Object> list(Integer page) {
+    public Map<String, Object> list(Integer page, String searchType, String keyword) {
 
         Map<String, Object> pageInfo = new HashMap();
 
@@ -70,7 +70,7 @@ public class BoardService {
         }
 
 
-        return Map.of("boardList", mapper.selectAllPaging(offset),
+        return Map.of("boardList", mapper.selectAllPaging(offset, searchType, keyword),
                 "pageInfo", pageInfo);
     }
 
