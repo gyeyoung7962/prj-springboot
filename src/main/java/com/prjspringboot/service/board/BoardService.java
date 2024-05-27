@@ -42,7 +42,8 @@ public class BoardService {
         Map<String, Object> pageInfo = new HashMap();
 
 
-        Integer countAll = mapper.countAll();
+        Integer countAll = mapper.countAllWithSearch(searchType, keyword);
+
 
         Integer offset = (page - 1) * 10;
         Integer lastPageNumber = (countAll - 1) / 10 + 1;

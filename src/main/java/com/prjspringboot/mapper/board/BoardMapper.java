@@ -82,4 +82,23 @@ public interface BoardMapper {
             """)
     Integer countAll();
 
+    @Select("""
+            <script>
+            select count(b.id)
+            from board b join member m on b.member_id = m.id
+            <trim prefix="where" prefixOverrides="OR">
+            <if test="searchType != null">
+            <bind name="pattern" value="'%'+keyword+'%'"/>
+            <if test="searchType == 'all' || searchType == 'text'">
+            OR b.title like #{pattern}
+            OR b.content like #{pattern}
+            </if>
+            <if test="searchType == 'all' || searchType == 'nickName'">
+            OR m.nick_name like #{pattern}
+            </if>
+            </if>
+            </trim>
+            </script>
+            """)
+    Integer countAllWithSearch(String searchType, String keyword);
 }
