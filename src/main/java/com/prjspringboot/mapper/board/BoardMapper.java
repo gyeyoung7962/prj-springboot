@@ -50,4 +50,14 @@ public interface BoardMapper {
             where member_id = #{memberId}
             """)
     int deleteByMemberId(Integer memberId);
+
+
+    @Select("""
+            select b.id, b.title, m.nick_name as writer
+            from board b join member m
+            on b.member_id = m.id
+            order by id desc
+            limit #{offset}, 10
+            """)
+    List<Board> selectAllPaging(Integer offset);
 }
