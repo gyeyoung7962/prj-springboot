@@ -83,4 +83,37 @@ from board;
 select count(*)
 from board;
 
+select *
+from member;
 
+update member
+set nick_name = 'abcd'
+where id = 20;
+
+update member
+set nick_name = 'efgh'
+where id = 21;
+
+update board
+set member_id = 20
+where id % 2 = 0;
+
+update board
+set member_id = 21
+where id % 2 = 1;
+
+
+update board
+set title   = 'abc def',
+    content = 'ghi jkl'
+where id % 3 = 0;
+
+update board
+set title   = 'mno pqr',
+    content = 'stu vwx'
+where id % 3 = 1;
+
+update board
+set title   = 'yz1 234',
+    content = '567 890'
+where id % 3 = 2;
