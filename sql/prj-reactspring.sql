@@ -74,3 +74,13 @@ where m.nick_name = 'admin';
 
 select *
 from member;
+
+#게시물 여러개 입력
+insert into board(title, content, member_id)
+select title, content, member_id
+from board;
+
+select count(*)
+from board;
+
+
