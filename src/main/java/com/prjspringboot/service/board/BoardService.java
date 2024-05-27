@@ -50,6 +50,8 @@ public class BoardService {
         Integer rightPageNumber = leftPageNumber + 9;
 
         rightPageNumber = Math.min(rightPageNumber, lastPageNumber);
+        leftPageNumber = rightPageNumber - 9;
+        leftPageNumber = Math.max(leftPageNumber, 1);
 
 
         pageInfo.put("currentPageNumber", page);
