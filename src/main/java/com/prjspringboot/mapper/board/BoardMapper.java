@@ -125,4 +125,10 @@ public interface BoardMapper {
             """)
     int deleteFileByBoardId(Integer boardId);
 
+
+    @Select("""
+            select id from board where member_id = #{memberId}
+            """)
+    List<Board> selectByMemberId(Integer memberId);
+
 }
