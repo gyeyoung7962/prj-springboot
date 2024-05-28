@@ -37,7 +37,7 @@ public class BoardController {
         }
 
         if (boardService.validate(board)) {
-            boardService.add(board, authentication);
+            boardService.add(board, authentication, files);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();

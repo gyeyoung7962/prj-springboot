@@ -13,6 +13,7 @@ public interface BoardMapper {
             insert into board(title, content, member_id)
             values (#{title}, #{content}, #{memberId})
             """)
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     void add(Board board);
 
     @Select("""
@@ -101,4 +102,11 @@ public interface BoardMapper {
             </script>
             """)
     Integer countAllWithSearch(String searchType, String keyword);
+
+    @Insert("""
+            insert into board_file(board_id, name)
+            values (#{boardId}, #{name})
+            """)
+    int insertFileName(Integer boardId, String name);
+
 }

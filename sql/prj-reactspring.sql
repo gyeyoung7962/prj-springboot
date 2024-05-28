@@ -117,3 +117,15 @@ update board
 set title   = 'yz1 234',
     content = '567 890'
 where id % 3 = 2;
+
+create table board_file
+(
+    board_id int          not null references board (id),
+    name     varchar(500) not null,
+    primary key (board_id, name)
+);
+
+select *
+from board_file;
+
+
