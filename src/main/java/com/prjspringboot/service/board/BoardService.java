@@ -116,6 +116,25 @@ public class BoardService {
 
     public void remove(Integer id) {
 
+        //file명 조회
+        List<String> fileNames = mapper.selectFileNameByBoardId(id);
+
+
+        //실제 파일 지우기
+        String dir = STR."/Users/igyeyeong/Desktop/Temp/prj-reactspring/\{id}/";
+        for (String fileName : fileNames) {
+            File file = new File(dir + fileName);
+            file.delete();
+        }
+        File dirFile = new File(dir);
+        if (dirFile.exists()) {
+            dirFile.delete();
+        }
+
+        //board_file 지우기
+        mapper.deleteFileByBoardId(id);
+
+        //board
         mapper.deleteById(id);
     }
 
