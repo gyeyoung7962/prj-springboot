@@ -16,7 +16,7 @@ public class Board {
     private LocalDateTime regDate;
 
     private Integer numberOfImages;
-    private List<String> imageSrcList;
+    private List<BoardFile> files;
 
 
 }
