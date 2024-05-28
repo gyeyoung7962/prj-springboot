@@ -131,4 +131,10 @@ public interface BoardMapper {
             """)
     List<Board> selectByMemberId(Integer memberId);
 
+    @Delete("""
+                delete from board_file
+                where board_id = #{boardId}
+                and name=#{fileName}
+            """)
+    int deleteFileByBoardIdAndName(Integer boardId, String fileName);
 }

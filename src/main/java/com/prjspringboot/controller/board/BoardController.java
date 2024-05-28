@@ -90,7 +90,7 @@ public class BoardController {
         }
         if (boardService.validate(board)) {
 
-            boardService.update(board);
+            boardService.edit(board, removeFileList);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();

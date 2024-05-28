@@ -139,8 +139,20 @@ public class BoardService {
         mapper.deleteById(id);
     }
 
-    public void update(Board board) {
+    public void edit(Board board, List<String> removeFileList) {
 
+        if (removeFileList != null && removeFileList.size() > 0) {
+            //disk의 파일 삭제
+            for (String fileName : removeFileList) {
+
+                String path = STR."/Users/igyeyeong/Desktop/Temp/prj-reactspring/\{board.getId()}/\{fileName}";
+                File file = new File(path);
+                file.delete();
+
+                //db records삭제
+                mapper.deleteFileByBoardIdAndName(board.getId(), fileName);
+            }
+        }
         mapper.update(board);
     }
 
