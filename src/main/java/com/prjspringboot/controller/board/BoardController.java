@@ -81,17 +81,15 @@ public class BoardController {
     @PutMapping("/edit")
     public ResponseEntity update(Board board, Authentication authentication
             , @RequestParam(value = "removeFileList[]", required = false) List<String> removeFileList,
-                                 @RequestParam(value = "addFileList[]", required = false) MultipartFile[] addFileList) {
+                                 @RequestParam(value = "addFileList[]", required = false) MultipartFile[] addFileList) throws Exception {
 
-        System.out.println("board = " + board);
-        System.out.println("removeFileList = " + removeFileList);
 
         if (!boardService.hasAccess(board.getId(), authentication)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         if (boardService.validate(board)) {
 
-            boardService.edit(board, removeFileList);
+            boardService.edit(board, removeFileList, addFileList);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();
