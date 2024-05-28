@@ -80,7 +80,8 @@ public class BoardController {
 
     @PutMapping("/edit")
     public ResponseEntity update(Board board, Authentication authentication
-            , @RequestParam(value = "removeFileList[]", required = false) List<String> removeFileList) {
+            , @RequestParam(value = "removeFileList[]", required = false) List<String> removeFileList,
+                                 @RequestParam(value = "addFileList[]", required = false) MultipartFile[] addFileList) {
 
         System.out.println("board = " + board);
         System.out.println("removeFileList = " + removeFileList);
