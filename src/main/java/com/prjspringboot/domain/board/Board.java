@@ -14,4 +14,6 @@ public class Board {
     private Integer memberId;
     private LocalDateTime regDate;
 
+    private Integer numberOfImages;
+
 }

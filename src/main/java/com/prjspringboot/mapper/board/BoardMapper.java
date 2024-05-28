@@ -57,8 +57,10 @@ public interface BoardMapper {
             <script>
             select b.id, 
                     b.title, 
-                    m.nick_name as writer
+                    m.nick_name as writer,
+                    count(f.name) as number_of_images
             from board b join member m on b.member_id = m.id
+            left join board_file f on b.id = f.board_id
             <trim prefix="where" prefixOverrides="OR">
             <if test="searchType != null">
             <bind name="pattern" value="'%'+keyword+'%'"/>
@@ -71,6 +73,7 @@ public interface BoardMapper {
             </if>
             </if>
             </trim>
+            group by b.id 
             order by id desc
             limit #{offset}, 10
             </script>
