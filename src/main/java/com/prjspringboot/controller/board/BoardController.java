@@ -98,9 +98,10 @@ public class BoardController {
 
     @PutMapping("/like")
     @PreAuthorize("isAuthenticated()")
-    public void like(@RequestBody Map<String, Object> req, Authentication authentication) {
+    public Map<String, Object> like(@RequestBody Map<String, Object> req, Authentication authentication) {
 
-        boardService.like(req, authentication);
+
+        return boardService.like(req, authentication);
     }
 
 
