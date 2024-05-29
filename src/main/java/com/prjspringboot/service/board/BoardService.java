@@ -46,7 +46,7 @@ public class BoardService {
                 //db에 해당 게시물의 파일 목록 저장
                 mapper.insertFileName(board.getId(), file.getOriginalFilename());
                 //실제 파일 저장(s3)
-                String key = STR."prj2\{board.getId()}/\{file.getOriginalFilename()}";
+                String key = STR."prj2/\{board.getId()}/\{file.getOriginalFilename()}";
                 PutObjectRequest objectRequest = PutObjectRequest.builder()
                         .bucket(bucketName)
                         .key(key)
