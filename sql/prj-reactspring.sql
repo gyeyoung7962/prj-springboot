@@ -134,6 +134,8 @@ create table board_like
     board_id  int not null references board (id),
     member_id int not null references member (id),
     primary key (board_id, member_id)
-)
+);
 
+select *
+from board_like;
 
