@@ -16,7 +16,6 @@ import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -155,9 +154,13 @@ public class BoardService {
             //disk의 파일 삭제
             for (String fileName : removeFileList) {
 
-                String path = STR."/Users/igyeyeong/Desktop/Temp/prj-reactspring/\{board.getId()}/\{fileName}";
-                File file = new File(path);
-                file.delete();
+                String key = STR."prj2/\{board.getId()}/\{fileName}";
+                DeleteObjectRequest objectRequest = DeleteObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(key)
+                        .build();
+                s3Client.deleteObject(objectRequest);
+
 
                 //db records삭제
                 mapper.deleteFileByBoardIdAndName(board.getId(), fileName);
@@ -172,14 +175,16 @@ public class BoardService {
                     // 새 파일이 기존에 없을 때만 db에 추가
                     mapper.insertFileName(board.getId(), fileName);
                 }
-                // disk 에 쓰기
-                File dir = new File(STR."/Users/igyeyeong/Desktop/Temp/prj-reactspring/\{board.getId()}");
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                String path = STR."/Users/igyeyeong/Desktop/Temp/prj-reactspring/\{board.getId()}/\{fileName}";
-                File destination = new File(path);
-                file.transferTo(destination);
+                // s3에 쓰기
+                String key = STR."prj2/\{board.getId()}/\{fileName}";
+                PutObjectRequest objectRequest = PutObjectRequest.builder()
+                        .bucket(bucketName)
+                        .key(key)
+                        .acl(ObjectCannedACL.PUBLIC_READ)
+                        .build();
+
+                s3Client.putObject(objectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+
             }
         }
         mapper.update(board);
