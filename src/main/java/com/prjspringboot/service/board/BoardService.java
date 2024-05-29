@@ -112,16 +112,30 @@ public class BoardService {
                 "pageInfo", pageInfo);
     }
 
-    public Board get(Integer id) {
+    public Map<String, Object> get(Integer id, Authentication authentication) {
+        Map<String, Object> result = new HashMap<>();
 
         Board board = mapper.selectById(id);
         List<String> fileNames = mapper.selectFileNameByBoardId(id);
+        // 버킷객체URL/{id}/{name}
         List<BoardFile> files = fileNames.stream()
                 .map(name -> new BoardFile(name, STR."\{srcPrefix}\{id}/\{name}"))
                 .toList();
 
         board.setFileList(files);
-        return board;
+
+        Map<String, Object> like = new HashMap<>();
+        if (authentication == null) {
+            like.put("like", false);
+        } else {
+            int c = mapper.selectLikeByBoardIdAndMemberId(id, authentication.getName());
+            like.put("like", c == 1);
+        }
+        like.put("count", mapper.selectCountLikeByBoardId(id));
+        result.put("board", board);
+        result.put("like", like);
+
+        return result;
     }
 
     public void remove(Integer id) {
@@ -216,4 +230,5 @@ public class BoardService {
 
         return result;
     }
+
 }
