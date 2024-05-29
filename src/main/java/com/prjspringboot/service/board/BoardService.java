@@ -33,6 +33,9 @@ public class BoardService {
     @Value("${aws.s3.bucket.name}")
     String bucketName;
 
+    @Value("${image.src.prefix}")
+    String srcPrefix;
+
 
     public void add(Board board, Authentication authentication, MultipartFile[] files) throws IOException {
 
@@ -114,7 +117,7 @@ public class BoardService {
         Board board = mapper.selectById(id);
         List<String> fileNames = mapper.selectFileNameByBoardId(id);
         List<BoardFile> files = fileNames.stream()
-                .map(name -> new BoardFile(name, STR."http://127.0.0.1:8888/\{id}/\{name}"))
+                .map(name -> new BoardFile(name, STR."\{srcPrefix}\{id}/\{name}"))
                 .toList();
 
         board.setFileList(files);
