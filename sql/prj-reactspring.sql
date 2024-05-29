@@ -128,4 +128,12 @@ create table board_file
 select *
 from board_file;
 
+#board_like 만들기
+create table board_like
+(
+    board_id  int not null references board (id),
+    member_id int not null references member (id),
+    primary key (board_id, member_id)
+)
+
 
