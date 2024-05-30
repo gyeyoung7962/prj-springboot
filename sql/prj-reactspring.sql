@@ -147,3 +147,17 @@ from board b
                    on b.id = f.board_id
          left join board_like l on b.id = l.board_id
 where b.id = 2;
+
+#댓글
+create table comment
+(
+    id        int primary key auto_increment,
+    board_id  int          not null references board (id),
+    member_id int          not null references member (id),
+    comment   varchar(500) not null,
+    regDate   datetime default now()
+);
+
+select *
+from comment;
+
