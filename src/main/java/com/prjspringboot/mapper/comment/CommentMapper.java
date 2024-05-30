@@ -17,7 +17,7 @@ public interface CommentMapper {
     int insert(Comment comment);
 
     @Select("""
-            select m.nick_name as writer, c.comment, c.regDate
+            select m.nick_name as writer, c.comment, c.regDate , c.id
             from comment c
                      join member m
                           on c.member_id = m.id
