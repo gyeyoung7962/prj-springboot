@@ -58,7 +58,8 @@ public interface BoardMapper {
             select b.id, 
                     b.title, 
                     m.nick_name as writer,
-                    count(f.name) as number_of_images
+                    count(f.name) as number_of_images,
+                    (select count(*) from board_like l where l.board_id = b.id ) number_of_like
             from board b join member m on b.member_id = m.id
             left join board_file f on b.id = f.board_id
             <trim prefix="where" prefixOverrides="OR">
