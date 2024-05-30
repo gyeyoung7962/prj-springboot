@@ -148,6 +148,8 @@ from board b
          left join board_like l on b.id = l.board_id
 where b.id = 2;
 
+desc comment;
+
 #댓글
 create table comment
 (
@@ -157,6 +159,8 @@ create table comment
     comment   varchar(500) not null,
     regDate   datetime default now()
 );
+alter table comment
+    drop column writer;
 
 select *
 from comment;
