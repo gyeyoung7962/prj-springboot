@@ -160,8 +160,18 @@ create table comment
     regDate   datetime default now()
 );
 alter table comment
-    drop column writer;
+    add column writer varchar(100);
 
 select *
 from comment;
+
+desc comment;
+
+select m.nick_name as writer, c.comment, c.regDate
+from comment c
+         join member m
+              on c.member_id = m.id
+         join board b
+              on b.id = c.board_id
+where b.id = 3;
 

@@ -17,10 +17,13 @@ public interface CommentMapper {
     int insert(Comment comment);
 
     @Select("""
-            select *
-            from comment
-            where board_id = #{boardId}
-            order by id asc
+            select m.nick_name as writer, c.comment, c.regDate
+            from comment c
+                     join member m
+                          on c.member_id = m.id
+                     join board b
+                          on b.id = c.board_id
+            where b.id = #{boardId};
             """)
     List<Comment> selectAllByBoardId(Integer boardId);
 }
