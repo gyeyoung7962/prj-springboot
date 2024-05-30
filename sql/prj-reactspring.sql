@@ -139,3 +139,11 @@ create table board_like
 select *
 from board_like;
 
+select b.id, count(distinct f.name), count(distinct l.member_id)
+from board b
+         join member m
+              on b.member_id = m.id
+         left join board_file f
+                   on b.id = f.board_id
+         left join board_like l on b.id = l.board_id
+where b.id = 2;
