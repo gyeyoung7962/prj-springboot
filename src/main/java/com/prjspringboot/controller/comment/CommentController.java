@@ -46,6 +46,20 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity edit(@RequestBody Comment comment, Authentication authentication) {
+
+        System.out.println("comment = " + comment);
+
+
+        if (service.hasAccess(comment, authentication)) {
+            service.editComment(comment);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
 
     }
 }

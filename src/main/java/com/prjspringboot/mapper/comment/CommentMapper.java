@@ -1,10 +1,7 @@
 package com.prjspringboot.mapper.comment;
 
 import com.prjspringboot.domain.comment.Comment;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -53,5 +50,13 @@ public interface CommentMapper {
             delete from comment
             where board_id = #{boardId}
             """)
-    void deleteByBoardId(Integer boardId);
+    int deleteByBoardId(Integer boardId);
+
+
+    @Update("""
+            update comment
+            set comment = #{comment}
+            where id = #{id}
+            """)
+    int editComment(Comment comment);
 }
