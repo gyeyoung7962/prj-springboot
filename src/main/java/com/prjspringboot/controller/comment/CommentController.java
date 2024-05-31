@@ -53,8 +53,6 @@ public class CommentController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity edit(@RequestBody Comment comment, Authentication authentication) {
 
-        System.out.println("comment = " + comment);
-
 
         if (service.hasAccess(comment, authentication)) {
             service.editComment(comment);
