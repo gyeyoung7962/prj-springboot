@@ -3,6 +3,7 @@ package com.prjspringboot.domain.comment;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 public class Comment {
@@ -14,4 +15,19 @@ public class Comment {
 
     private String writer;
     private LocalDateTime regDate;
+
+    public String getRegDate() {
+        LocalDateTime beforOneDay = LocalDateTime.now().minusDays(1);
+
+        if (regDate.isBefore(beforOneDay)) {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            return regDate.format(formatter).toString();
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            return regDate.format(formatter).toString();
+        }
+
+
+    }
 }
