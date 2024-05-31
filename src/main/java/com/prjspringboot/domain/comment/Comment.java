@@ -17,9 +17,9 @@ public class Comment {
     private LocalDateTime regDate;
 
     public String getRegDate() {
-        LocalDateTime beforOneDay = LocalDateTime.now().minusDays(1);
+        LocalDateTime beforeOneDay = LocalDateTime.now().minusDays(1);
 
-        if (regDate.isBefore(beforOneDay)) {
+        if (regDate.isBefore(beforeOneDay)) {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             return regDate.format(formatter).toString();

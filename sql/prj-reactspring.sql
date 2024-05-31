@@ -175,3 +175,9 @@ from comment c
               on b.id = c.board_id
 where b.id = 3;
 
+select *
+from member;
+
+insert into board(title, content, member_id)
+select title, content, member_id
+from board;
