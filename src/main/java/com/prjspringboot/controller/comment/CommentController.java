@@ -36,6 +36,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/remove")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity remove(@RequestBody Comment comment, Authentication authentication) {
 
 
@@ -49,6 +50,7 @@ public class CommentController {
     }
 
     @PutMapping("/edit")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity edit(@RequestBody Comment comment, Authentication authentication) {
 
         System.out.println("comment = " + comment);
