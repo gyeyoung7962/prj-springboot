@@ -165,6 +165,13 @@ alter table comment
 select *
 from comment;
 
+select *
+from member;
+select *
+from authority;
+insert into authority (member_id, name)
+values (1, 'admin');
+
 desc comment;
 
 select m.nick_name as writer, c.comment, c.regDate
