@@ -3,6 +3,7 @@ package com.prjspringboot.controller.comment;
 import com.prjspringboot.domain.comment.Comment;
 import com.prjspringboot.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -35,11 +36,16 @@ public class CommentController {
     }
 
     @DeleteMapping("/remove")
-    public void remove(@RequestBody Comment comment) {
+    public ResponseEntity remove(@RequestBody Comment comment, Authentication authentication) {
 
 
-        System.out.println("comment = " + comment.getId());
-        service.remove(comment);
+        if (service.hasAccess(comment, authentication)) {
+            service.remove(comment);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
 
     }
 }

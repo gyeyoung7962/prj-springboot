@@ -3,6 +3,7 @@ package com.prjspringboot.service.board;
 import com.prjspringboot.domain.board.Board;
 import com.prjspringboot.domain.board.BoardFile;
 import com.prjspringboot.mapper.board.BoardMapper;
+import com.prjspringboot.mapper.comment.CommentMapper;
 import com.prjspringboot.mapper.member.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,7 @@ public class BoardService {
     private final BoardMapper mapper;
     private final MemberMapper memberMapper;
     private final S3Client s3Client;
+    private final CommentMapper commentMapper;
 
     @Value("${aws.s3.bucket.name}")
     String bucketName;
@@ -154,6 +156,9 @@ public class BoardService {
             s3Client.deleteObject(objectRequest);
         }
 
+
+        //댓글 삭제
+        commentMapper.deleteByBoardId(id);
 
         //board_file 지우기
         mapper.deleteFileByBoardId(id);

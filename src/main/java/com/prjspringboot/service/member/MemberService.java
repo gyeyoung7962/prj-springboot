@@ -3,6 +3,7 @@ package com.prjspringboot.service.member;
 import com.prjspringboot.domain.board.Board;
 import com.prjspringboot.domain.member.Member;
 import com.prjspringboot.mapper.board.BoardMapper;
+import com.prjspringboot.mapper.comment.CommentMapper;
 import com.prjspringboot.mapper.member.MemberMapper;
 import com.prjspringboot.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class MemberService {
     private final JwtEncoder jwtEncoder;
     private final BoardMapper boardMapper;
     private final BoardService boardService;
+    private final CommentMapper commentMapper;
 
 
     public void add(Member member) {
@@ -92,6 +94,9 @@ public class MemberService {
 
         //좋아요 지우기
         boardMapper.deleteLikeByMember(id);
+
+        //댓글 지우기
+        commentMapper.deleteCommentByMember(id);
 
 
         // member 테이블에서 지우기

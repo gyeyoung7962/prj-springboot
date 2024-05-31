@@ -47,4 +47,16 @@ public class CommentService {
 
         mapper.delete(comment.getId());
     }
+
+    public boolean hasAccess(Comment comment, Authentication authentication) {
+
+        Comment db = mapper.selectById(comment.getId());
+        if (db == null) {
+            return false;
+        }
+        if (!authentication.getName().equals(db.getMemberId().toString())) {
+            return false;
+        }
+        return true;
+    }
 }

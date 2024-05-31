@@ -175,4 +175,5 @@ public interface BoardMapper {
             delete from board_like where member_id = #{memberId}
             """)
     int deleteLikeByMember(Integer memberId);
+
 }
